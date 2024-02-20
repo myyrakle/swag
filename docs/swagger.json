@@ -1,0 +1,70 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/shops": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "샵 목록을 조회하는 API 입니다.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Shops"
+                ],
+                "summary": "샵 목록 조회 ✅",
+                "responses": {
+                    "200": {
+                        "description": "샵 목록 응답 값",
+                        "schema": {
+                            "$ref": "#/definitions/tester.ListShopsResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "tester.ListShopsResponse": {
+            "type": "object",
+            "properties": {
+                "shops": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tester.ShopResponse"
+                    }
+                },
+                "shopsV2": {
+                    "$ref": "#/definitions/tester.ShopsResponseV2"
+                }
+            }
+        },
+        "tester.ShopResponse": {
+            "type": "object",
+            "required": [
+                "shopID",
+                "shopName"
+            ],
+            "properties": {
+                "shopID": {
+                    "description": "샵 ID",
+                    "type": "string",
+                    "example": "63ec5ccff19921e0414902b7"
+                },
+                "shopName": {
+                    "type": "string",
+                    "example": "스토어 쟈넬"
+                }
+            }
+        },
+        "tester.ShopsResponseV2": {
+            "type": "object"
+        }
+    }
+}

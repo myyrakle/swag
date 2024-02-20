@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/swaggo/swag/example/basic/api"
-	"github.com/swaggo/swag/testdata/invalid_external_pkg/invalid"
+	"github.com/myyrakle/swag/example/basic/api"
+	"github.com/myyrakle/swag/testdata/invalid_external_pkg/invalid"
 )
 
 // @title Swagger Example API

@@ -1,6 +1,6 @@
 # swag
 
-🌍 *[English](README.md) ∙ [简体中文](README_zh-CN.md) ∙ [Português](README_pt.md)*
+🌍 _[English](README.md) ∙ [简体中文](README_zh-CN.md) ∙ [Português](README_pt.md)_
 
 <img align="right" width="180px" src="https://raw.githubusercontent.com/swaggo/swag/master/assets/swaggo.png">
 
@@ -16,34 +16,35 @@
 Swag converte anotações Go para Documentação Swagger 2.0. Criámos uma variedade de plugins para populares [Go web frameworks](#supported-web-frameworks). Isto permite uma integração rápida com um projecto Go existente (utilizando a Swagger UI).
 
 ## Conteúdo
+
 - [Começando](#começando)
- - [Estruturas Web Suportadas](#estruturas-web-suportadas)
- - [Como utilizá-lo com Gin](#como-como-ser-como-gin)
- - [O formatador de swag](#a-formatação-de-swag)
- - [Estado de Implementação](#implementação-estado)
- - [Formato dos comentários declarativos](#formato-dos-comentarios-declarativos)
-	- [Informações Gerais API](#informações-gerais-api)
-	- [Operação API](#api-operacao)
-	- [Segurança](#seguranca)
- - [Exemplos](#exemplos)
-    - [Descrições em múltiplas linhas](#descricoes-sobre-múltiplas-linhas)
-	- [Estrutura definida pelo utilizador com um tipo de matriz](#-estrutura-definida-pelo-utilizador-com-um-um-tipo)
-	- [Declaração de estruturação de funções](#function-scoped-struct-declaration)
-	- [Composição do modelo em resposta](#model-composição-em-resposta)
-	- [Adicionar um cabeçalho em resposta](#add-a-headers-in-response)
-	- [Utilizar parâmetros de caminhos múltiplos](#use-multiple-path-params)
-	- [Exemplo de valor de estrutura](#exemplo-do-valor-de-estrutura)
-	- [Schema Exemplo do corpo](#schemaexample-of-body)
-	- [Descrição da estrutura](#descrição-da-estrutura)
-	- [Usar etiqueta do tipo swaggertype para suportar o tipo personalizado](#use-swaggertype-tag-to-supported-custom-type)
-	- [Utilizar anulações globais para suportar um tipo personalizado](#use-global-overrides-to-support-a-custom-type)
-	- [Use swaggerignore tag para excluir um campo](#use-swaggerignore-tag-to-excluir-um-campo)
-	- [Adicionar informações de extensão ao campo de estruturação](#add-extension-info-to-struct-field)
-	- [Renomear modelo a expor](#renome-modelo-a-exibir)
-	- [Como utilizar as anotações de segurança](#como-utilizar-as-anotações-de-segurança)
-	- [Adicionar uma descrição para enumerar artigos](#add-a-description-for-enum-items)
-	- [Gerar apenas tipos de ficheiros de documentos específicos](#generate-only-specific-docs-file-file-types)
-    - [Como usar tipos genéricos](#como-usar-tipos-genéricos)
+- [Estruturas Web Suportadas](#estruturas-web-suportadas)
+- [Como utilizá-lo com Gin](#como-como-ser-como-gin)
+- [O formatador de swag](#a-formatação-de-swag)
+- [Estado de Implementação](#implementação-estado)
+- [Formato dos comentários declarativos](#formato-dos-comentarios-declarativos)
+  - [Informações Gerais API](#informações-gerais-api)
+  - [Operação API](#api-operacao)
+  - [Segurança](#seguranca)
+- [Exemplos](#exemplos)
+  - [Descrições em múltiplas linhas](#descricoes-sobre-múltiplas-linhas)
+  - [Estrutura definida pelo utilizador com um tipo de matriz](#-estrutura-definida-pelo-utilizador-com-um-um-tipo)
+  - [Declaração de estruturação de funções](#function-scoped-struct-declaration)
+  - [Composição do modelo em resposta](#model-composição-em-resposta)
+  - [Adicionar um cabeçalho em resposta](#add-a-headers-in-response)
+  - [Utilizar parâmetros de caminhos múltiplos](#use-multiple-path-params)
+  - [Exemplo de valor de estrutura](#exemplo-do-valor-de-estrutura)
+  - [Schema Exemplo do corpo](#schemaexample-of-body)
+  - [Descrição da estrutura](#descrição-da-estrutura)
+  - [Usar etiqueta do tipo swaggertype para suportar o tipo personalizado](#use-swaggertype-tag-to-supported-custom-type)
+  - [Utilizar anulações globais para suportar um tipo personalizado](#use-global-overrides-to-support-a-custom-type)
+  - [Use swaggerignore tag para excluir um campo](#use-swaggerignore-tag-to-excluir-um-campo)
+  - [Adicionar informações de extensão ao campo de estruturação](#add-extension-info-to-struct-field)
+  - [Renomear modelo a expor](#renome-modelo-a-exibir)
+  - [Como utilizar as anotações de segurança](#como-utilizar-as-anotações-de-segurança)
+  - [Adicionar uma descrição para enumerar artigos](#add-a-description-for-enum-items)
+  - [Gerar apenas tipos de ficheiros de documentos específicos](#generate-only-specific-docs-file-file-types)
+  - [Como usar tipos genéricos](#como-usar-tipos-genéricos)
 - [Sobre o projecto](#sobre-o-projecto)
 
 ## Começando
@@ -51,19 +52,23 @@ Swag converte anotações Go para Documentação Swagger 2.0. Criámos uma varie
 1. Adicione comentários ao código-fonte da API, consulte [Formato dos comentários declarativos](#declarative-comments-format).
 
 2. Descarregue o swag utilizando:
+
 ```sh
 go install github.com/swaggo/swag/cmd/swag@latest
 ```
+
 Para construir a partir da fonte é necessário [Go](https://golang.org/dl/) (1.18 ou mais recente).
 
 Ou descarregar um binário pré-compilado a partir da [página de lançamento](https://github.com/swaggo/swag/releases).
 
 3. Executar `swag init` na pasta raiz do projecto que contém o ficheiro `main.go`. Isto irá analisar os seus comentários e gerar os ficheiros necessários (pasta `docs` e `docs/docs.go`).
+
 ```sh
 swag init
 ```
 
 Certifique-se de importar os `docs/docs.go` gerados para que a sua configuração específica fique "init" ed. Se as suas anotações API gerais não viverem em `main.go`, pode avisar a swag com a bandeira `-g`.
+
 ```sh
 swag init -g http/api.go
 ```
@@ -136,13 +141,13 @@ OPÇÕES:
 Encontrar o código fonte de exemplo [aqui](https://github.com/swaggo/swag/tree/master/example/celler).
 
 1. Depois de utilizar `swag init` para gerar os documentos Swagger 2.0, importar os seguintes pacotes:
+
 ```go
 import "github.com/swaggo/gin-swagger" // gin-swagger middleware
 import "github.com/swaggo/files" // swagger embed files
 ```
 
 2. Adicionar [Informações Gerais API](#general-api-info) anotações em código `main.go`:
-
 
 ```go
 // @title           Swagger Example API
@@ -237,8 +242,8 @@ import (
     "strconv"
 
     "github.com/gin-gonic/gin"
-    "github.com/swaggo/swag/example/celler/httputil"
-    "github.com/swaggo/swag/example/celler/model"
+    "github.com/myyrakle/swag/example/celler/httputil"
+    "github.com/myyrakle/swag/example/celler/model"
 )
 
 // ShowAccount godoc
@@ -306,17 +311,19 @@ Os Swag Comments podem ser formatados automaticamente, assim como 'go fmt'.
 Encontre o resultado da formatação [aqui](https://github.com/swaggo/swag/tree/master/example/celler).
 
 Usage:
+
 ```shell
 swag fmt
 ```
 
 Exclude folder：
+
 ```shell
 swag fmt -d ./ --exclude ./internal
 ```
 
 Ao utilizar `swag fmt`, é necessário assegurar-se de que tem um comentário doc para a função a fim de assegurar uma formatação correcta.
-Isto deve-se ao `swag fmt` que traça comentários swag com separadores, o que só é permitido *após* um comentário doc padrão.
+Isto deve-se ao `swag fmt` que traça comentários swag com separadores, o que só é permitido _após_ um comentário doc padrão.
 
 Por exemplo, utilizar
 
@@ -364,75 +371,75 @@ func (c *Controller) ListAccounts(ctx *gin.Context) {
 **Exemplo**
 [celler/main.go](https://github.com/swaggo/swag/blob/master/example/celler/main.go)
 
-| anotação | descrição | exemplo |
-|-------------|--------------------------------------------|---------------------------------|
-| title | **Obrigatório.** O título da aplicação.| // @title Swagger Example API |
-| version | **Obrigatório.** Fornece a versão da aplicação API.| // @version 1.0 |
-| description | Uma breve descrição da candidatura.    |// @descrição Este é um servidor servidor de celas de amostra.         																 |
-| tag.name | Nome de uma tag.| // @tag.name Este é o nome da tag |
-| tag.description | Descrição da tag | // @tag.description Cool Description |
-| tag.docs.url | Url da Documentação externa da tag | // @tag.docs.url https://example.com|
-| tag.docs.description | Descrição da documentação externa da tag| // @tag.docs.description Melhor exemplo de documentação |
-| TermsOfService | Os Termos de Serviço para o API.| // @termsOfService http://swagger.io/terms/ |
-| contact.name | A informação de contacto para a API exposta.| // @contacto.name Suporte API |
-| contact.url | O URL que aponta para as informações de contacto. DEVE estar no formato de um URL.  | // @contact.url http://www.swagger.io/support|
-| contact.email| O endereço de email da pessoa/organização de contacto. DEVE estar no formato de um endereço de correio electrónico.| // @contact.email support@swagger.io |
-| license.name | **Obrigatório.** O nome da licença utilizada para a API.|// @licença.name Apache 2.0|
-| license.url | Um URL para a licença utilizada para a API. DEVE estar no formato de um URL.                       | // @license.url http://www.apache.org/licenses/LICENSE-2.0.html |
-| host | O anfitrião (nome ou ip) que serve o API.     | // @host localhost:8080 |
-| BasePath | O caminho de base sobre o qual o API é servido. | // @BasePath /api/v1 |
-| accept | Uma lista de tipos de MIME que os APIs podem consumir. Note que accept só afecta operações com um organismo de pedido, tais como POST, PUT e PATCH.  O valor DEVE ser o descrito em [Tipos de Mime](#mime-types).                     | // @accept json |
-| produce | Uma lista de tipos de MIME que os APIs podem produce. O valor DEVE ser o descrito em [Tipos de Mime](#mime-types).                     | // @produce json |
-| query.collection.format | O formato padrão de param de colecção(array) em query,enums:csv,multi,pipes,tsv,ssv. Se não definido, csv é o padrão.| // @query.collection.format multi
-| schemes | O protocolo de transferência para a operação que separou por espaços. | // @schemes http https |
-| externalDocs.description | Descrição do documento externo. | // @externalDocs.description OpenAPI |
-| externalDocs.url | URL do documento externo. | // @externalDocs.url https://swagger.io/resources/open-api/ |
-| x-name | A chave de extensão, deve ser iniciada por x- e tomar apenas o valor json | // @x-example-key {"chave": "valor"} |
+| anotação                 | descrição                                                                                                                                                                                                        | exemplo                                                         |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| title                    | **Obrigatório.** O título da aplicação.                                                                                                                                                                          | // @title Swagger Example API                                   |
+| version                  | **Obrigatório.** Fornece a versão da aplicação API.                                                                                                                                                              | // @version 1.0                                                 |
+| description              | Uma breve descrição da candidatura.                                                                                                                                                                              | // @descrição Este é um servidor servidor de celas de amostra.  |
+| tag.name                 | Nome de uma tag.                                                                                                                                                                                                 | // @tag.name Este é o nome da tag                               |
+| tag.description          | Descrição da tag                                                                                                                                                                                                 | // @tag.description Cool Description                            |
+| tag.docs.url             | Url da Documentação externa da tag                                                                                                                                                                               | // @tag.docs.url https://example.com                            |
+| tag.docs.description     | Descrição da documentação externa da tag                                                                                                                                                                         | // @tag.docs.description Melhor exemplo de documentação         |
+| TermsOfService           | Os Termos de Serviço para o API.                                                                                                                                                                                 | // @termsOfService http://swagger.io/terms/                     |
+| contact.name             | A informação de contacto para a API exposta.                                                                                                                                                                     | // @contacto.name Suporte API                                   |
+| contact.url              | O URL que aponta para as informações de contacto. DEVE estar no formato de um URL.                                                                                                                               | // @contact.url http://www.swagger.io/support                   |
+| contact.email            | O endereço de email da pessoa/organização de contacto. DEVE estar no formato de um endereço de correio electrónico.                                                                                              | // @contact.email support@swagger.io                            |
+| license.name             | **Obrigatório.** O nome da licença utilizada para a API.                                                                                                                                                         | // @licença.name Apache 2.0                                     |
+| license.url              | Um URL para a licença utilizada para a API. DEVE estar no formato de um URL.                                                                                                                                     | // @license.url http://www.apache.org/licenses/LICENSE-2.0.html |
+| host                     | O anfitrião (nome ou ip) que serve o API.                                                                                                                                                                        | // @host localhost:8080                                         |
+| BasePath                 | O caminho de base sobre o qual o API é servido.                                                                                                                                                                  | // @BasePath /api/v1                                            |
+| accept                   | Uma lista de tipos de MIME que os APIs podem consumir. Note que accept só afecta operações com um organismo de pedido, tais como POST, PUT e PATCH. O valor DEVE ser o descrito em [Tipos de Mime](#mime-types). | // @accept json                                                 |
+| produce                  | Uma lista de tipos de MIME que os APIs podem produce. O valor DEVE ser o descrito em [Tipos de Mime](#mime-types).                                                                                               | // @produce json                                                |
+| query.collection.format  | O formato padrão de param de colecção(array) em query,enums:csv,multi,pipes,tsv,ssv. Se não definido, csv é o padrão.                                                                                            | // @query.collection.format multi                               |
+| schemes                  | O protocolo de transferência para a operação que separou por espaços.                                                                                                                                            | // @schemes http https                                          |
+| externalDocs.description | Descrição do documento externo.                                                                                                                                                                                  | // @externalDocs.description OpenAPI                            |
+| externalDocs.url         | URL do documento externo.                                                                                                                                                                                        | // @externalDocs.url https://swagger.io/resources/open-api/     |
+| x-name                   | A chave de extensão, deve ser iniciada por x- e tomar apenas o valor json                                                                                                                                        | // @x-example-key {"chave": "valor"}                            |
 
 ### Usando descrições de remarcação para baixo
+
 Quando uma pequena sequência na sua documentação é insuficiente, ou precisa de imagens, exemplos de códigos e coisas do género, pode querer usar descrições de marcação. Para utilizar as descrições markdown, utilize as seguintes anotações.
 
-| anotação | descrição | exemplo |
-|-------------|--------------------------------------------|---------------------------------|
-| title | **Obrigatório.** O título da aplicação.| // @title Swagger Example API |
-| version | **Obrigatório.** Fornece a versão da aplicação API.| // @versão 1.0 |
-| description.markdown | Uma breve descrição da candidatura. Parsed a partir do ficheiro api.md. Esta é uma alternativa a @description |// @description.markdown Sem valor necessário, isto analisa a descrição do ficheiro api.md |.
-| tag.name | Nome de uma tag.| // @tag.name Este é o nome da tag |
-| tag.description.markdown | Descrição da tag esta é uma alternativa à tag.description. A descrição será lida a partir de um ficheiro nomeado como tagname.md | // @tag.description.markdown |
+| anotação                 | descrição                                                                                                                        | exemplo                                                                                    |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --- |
+| title                    | **Obrigatório.** O título da aplicação.                                                                                          | // @title Swagger Example API                                                              |
+| version                  | **Obrigatório.** Fornece a versão da aplicação API.                                                                              | // @versão 1.0                                                                             |
+| description.markdown     | Uma breve descrição da candidatura. Parsed a partir do ficheiro api.md. Esta é uma alternativa a @description                    | // @description.markdown Sem valor necessário, isto analisa a descrição do ficheiro api.md | .   |
+| tag.name                 | Nome de uma tag.                                                                                                                 | // @tag.name Este é o nome da tag                                                          |
+| tag.description.markdown | Descrição da tag esta é uma alternativa à tag.description. A descrição será lida a partir de um ficheiro nomeado como tagname.md | // @tag.description.markdown                                                               |
 
 ## Operação API
 
 **Exemplo**
 [celler/controller](https://github.com/swaggo/swag/tree/master/example/celler/controller)
 
-| anotação | descrição |
-|-------------|----------------------------------------------------------------------------------------------------------------------------|
-| descrição | Uma explicação verbosa do comportamento da operação.                                                                           |
-| description.markdown | Uma breve descrição da candidatura. A descrição será lida a partir de um ficheiro.  Por exemplo, `@description.markdown details` irá carregar `details.md`| // @description.file endpoint.description.markdown |
-| id | Um fio único utilizado para identificar a operação. Deve ser única entre todas as operações API.                                   |
-| tags | Uma lista de tags para cada operação API que separou por vírgulas.                                                             |
-| summary | Um breve resumo do que a operação faz.                                                                                |
-| accept | Uma lista de tipos de MIME que os APIs podem consumir. Note que accept só afecta operações com um organismo de pedido, tais como POST, PUT e PATCH.  O valor DEVE ser o descrito em [Tipos de Mime](#mime-types).                     |
-| produce | Uma lista de tipos de MIME que os APIs podem produce. O valor DEVE ser o descrito em [Tipos de Mime](#mime-types).                     |
-| param | Parâmetros que se separaram por espaços. `param name`,`param type`,`data type`,`is mandatory?`,`comment` `attribute(optional)` |
-| security | [Segurança](#security) para cada operação API.                                                                               |
-| success | resposta de sucesso que separou por espaços. `return code or default`,`{param type}`,`data type`,`comment` |.
-| failure | Resposta de falha que separou por espaços. `return code or default`,`{param type}`,`data type`,`comment` |
-| response | Igual ao `sucesso` e `falha` |
-| header | Cabeçalho em resposta que separou por espaços. `código de retorno`,`{tipo de parâmetro}`,`tipo de dados`,`comentário` |.
-| router | Definição do caminho que separou por espaços. caminho",`path`,`[httpMethod]` |[httpMethod]` |
-| x-name | A chave de extensão, deve ser iniciada por x- e tomar apenas o valor json.                                                           |
-| x-codeSample | Optional Markdown use. tomar `file` como parâmetro. Isto irá então procurar um ficheiro nomeado como o resumo na pasta dada.                                      |
-| deprecated | Marcar o ponto final como depreciado.                                                                                               |
+| anotação             | descrição                                                                                                                                                                                                        |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| descrição            | Uma explicação verbosa do comportamento da operação.                                                                                                                                                             |
+| description.markdown | Uma breve descrição da candidatura. A descrição será lida a partir de um ficheiro. Por exemplo, `@description.markdown details` irá carregar `details.md`                                                        | // @description.file endpoint.description.markdown |
+| id                   | Um fio único utilizado para identificar a operação. Deve ser única entre todas as operações API.                                                                                                                 |
+| tags                 | Uma lista de tags para cada operação API que separou por vírgulas.                                                                                                                                               |
+| summary              | Um breve resumo do que a operação faz.                                                                                                                                                                           |
+| accept               | Uma lista de tipos de MIME que os APIs podem consumir. Note que accept só afecta operações com um organismo de pedido, tais como POST, PUT e PATCH. O valor DEVE ser o descrito em [Tipos de Mime](#mime-types). |
+| produce              | Uma lista de tipos de MIME que os APIs podem produce. O valor DEVE ser o descrito em [Tipos de Mime](#mime-types).                                                                                               |
+| param                | Parâmetros que se separaram por espaços. `param name`,`param type`,`data type`,`is mandatory?`,`comment` `attribute(optional)`                                                                                   |
+| security             | [Segurança](#security) para cada operação API.                                                                                                                                                                   |
+| success              | resposta de sucesso que separou por espaços. `return code or default`,`{param type}`,`data type`,`comment`                                                                                                       | .                                                  |
+| failure              | Resposta de falha que separou por espaços. `return code or default`,`{param type}`,`data type`,`comment`                                                                                                         |
+| response             | Igual ao `sucesso` e `falha`                                                                                                                                                                                     |
+| header               | Cabeçalho em resposta que separou por espaços. `código de retorno`,`{tipo de parâmetro}`,`tipo de dados`,`comentário`                                                                                            | .                                                  |
+| router               | Definição do caminho que separou por espaços. caminho",`path`,`[httpMethod]`                                                                                                                                     | [httpMethod]`                                      |
+| x-name               | A chave de extensão, deve ser iniciada por x- e tomar apenas o valor json.                                                                                                                                       |
+| x-codeSample         | Optional Markdown use. tomar `file` como parâmetro. Isto irá então procurar um ficheiro nomeado como o resumo na pasta dada.                                                                                     |
+| deprecated           | Marcar o ponto final como depreciado.                                                                                                                                                                            |
 
 ## Mime Types
 
 `swag` aceita todos os tipos MIME que estão no formato correcto, ou seja, correspondem `*/*`.
 Além disso, `swag` também aceita pseudónimos para alguns tipos de MIME, como se segue:
 
-
 | Alias                 | MIME Type                         |
-|-----------------------|-----------------------------------|
+| --------------------- | --------------------------------- |
 | json                  | application/json                  |
 | xml                   | text/xml                          |
 | plain                 | text/plain                        |
@@ -445,8 +452,6 @@ Além disso, `swag` também aceita pseudónimos para alguns tipos de MIME, como 
 | png                   | image/png                         |
 | jpeg                  | image/jpeg                        |
 | gif                   | image/gif                         |
-
-
 
 ## Tipo de parâmetro
 
@@ -466,24 +471,24 @@ Além disso, `swag` também aceita pseudónimos para alguns tipos de MIME, como 
 - user defined struct
 
 ## Segurança
-| anotação | descrição | parâmetros | exemplo |
-|------------|-------------|------------|---------|
-| securitydefinitions.basic | [Basic](https://swagger.io/docs/specification/2-0/authentication/basic-authentication/) auth.  | | // @securityDefinitions.basicAuth | [Básico]()
-| securitydefinitions.apikey | [chave API](https://swagger.io/docs/specification/2-0/authentication/api-keys/) auth.            | in, name, description | // @securityDefinitions.apikey ApiKeyAuth |
-| securitydefinitions.oauth2.application | [Aplicação OAuth2](https://swagger.io/docs/specification/authentication/oauth2/) auth.       | tokenUrl, scope, description | // @securitydefinitions.oauth2.application OAuth2Application |
-| securitydefinitions.oauth2.implicit | [OAuth2 implicit](https://swagger.io/docs/specification/authentication/oauth2/) auth.          | authorizationUrl, scope, description | // @securitydefinitions.oauth2.implicit OAuth2Implicit | [OAuth2Implicit]()
-| securitydefinitions.oauth2.password | [OAuth2 password](https://swagger.io/docs/specification/authentication/oauth2/) auth.          | tokenUrl, scope, description | // @securitydefinitions.oauth2.password OAuth2Password |
-| securitydefinitions.oauth2.accessCode | [código de acesso OAuth2](https://swagger.io/docs/specification/authentication/oauth2/) auth.       | tokenUrl, authorizationUrl, scope, description | // @securitydefinitions.oauth2.accessCode OAuth2AccessCode | [código de acesso OAuth2.accessCode]()
 
+| anotação                               | descrição                                                                                     | parâmetros                                     | exemplo                                                      |
+| -------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------ | -------------------------------------- |
+| securitydefinitions.basic              | [Basic](https://swagger.io/docs/specification/2-0/authentication/basic-authentication/) auth. |                                                | // @securityDefinitions.basicAuth                            | [Básico]()                             |
+| securitydefinitions.apikey             | [chave API](https://swagger.io/docs/specification/2-0/authentication/api-keys/) auth.         | in, name, description                          | // @securityDefinitions.apikey ApiKeyAuth                    |
+| securitydefinitions.oauth2.application | [Aplicação OAuth2](https://swagger.io/docs/specification/authentication/oauth2/) auth.        | tokenUrl, scope, description                   | // @securitydefinitions.oauth2.application OAuth2Application |
+| securitydefinitions.oauth2.implicit    | [OAuth2 implicit](https://swagger.io/docs/specification/authentication/oauth2/) auth.         | authorizationUrl, scope, description           | // @securitydefinitions.oauth2.implicit OAuth2Implicit       | [OAuth2Implicit]()                     |
+| securitydefinitions.oauth2.password    | [OAuth2 password](https://swagger.io/docs/specification/authentication/oauth2/) auth.         | tokenUrl, scope, description                   | // @securitydefinitions.oauth2.password OAuth2Password       |
+| securitydefinitions.oauth2.accessCode  | [código de acesso OAuth2](https://swagger.io/docs/specification/authentication/oauth2/) auth. | tokenUrl, authorizationUrl, scope, description | // @securitydefinitions.oauth2.accessCode OAuth2AccessCode   | [código de acesso OAuth2.accessCode]() |
 
-| anotação de parâmetros | exemplo |
-|---------------------------------|-------------------------------------------------------------------------|
-| in | // @in header |
-| name | // @name Authorization |
-| tokenUrl | // @tokenUrl https://example.com/oauth/token |
-| authorizationurl | // @authorizationurl https://example.com/oauth/authorize |
-| scope.hoge | // @scope.write Grants write access |
-| description | // @descrição OAuth protege os pontos finais da nossa entidade |
+| anotação de parâmetros | exemplo                                                        |
+| ---------------------- | -------------------------------------------------------------- |
+| in                     | // @in header                                                  |
+| name                   | // @name Authorization                                         |
+| tokenUrl               | // @tokenUrl https://example.com/oauth/token                   |
+| authorizationurl       | // @authorizationurl https://example.com/oauth/authorize       |
+| scope.hoge             | // @scope.write Grants write access                            |
+| description            | // @descrição OAuth protege os pontos finais da nossa entidade |
 
 ## Atributo
 
@@ -511,10 +516,11 @@ type Foo struct {
 
 ### Disponível
 
-Nome do campo | Tipo | Descrição
----|:---:|---
-<a name="validate"></a>validate | `string` | Determina a validação para o parâmetro. Os valores possíveis são: `required,optional`.
-<a name="parameterDefault"></a>default | * | Declara o valor do parâmetro que o servidor utilizará se nenhum for fornecido, por exemplo, uma "contagem" para controlar o número de resultados por página poderá ser por defeito de 100 se não for fornecido pelo cliente no pedido. (Nota: "por defeito" não tem significado para os parâmetros requeridos).
+| Nome do campo                          |   Tipo   | Descrição                                                                                                                                                                                                                                                                                                       |
+| -------------------------------------- | :------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a name="validate"></a>validate        | `string` | Determina a validação para o parâmetro. Os valores possíveis são: `required,optional`.                                                                                                                                                                                                                          |
+| <a name="parameterDefault"></a>default |    \*    | Declara o valor do parâmetro que o servidor utilizará se nenhum for fornecido, por exemplo, uma "contagem" para controlar o número de resultados por página poderá ser por defeito de 100 se não for fornecido pelo cliente no pedido. (Nota: "por defeito" não tem significado para os parâmetros requeridos). |
+
 See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-6.2. Ao contrário do esquema JSON, este valor DEVE estar em conformidade com o definido [`type`](#parameterType) para este parâmetro.
 <a name="parameterMaximum"></a>maximum | `number` | Ver https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.2.
 <a name="parameterMinimum"></a>minimum | `number` | Ver https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.3.
@@ -524,20 +530,19 @@ See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-6.2.
 <a name="parameterEnums"></a>enums | [\*] | Ver https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.5.1.
 <a name="parameterFormat"></a>format | `string` | O formato de extensão para o anteriormente mencionado [`type`](#parameterType). Ver [Data Type Formats](https://swagger.io/specification/v2/#dataTypeFormat) para mais detalhes.
 <a name="parameterCollectionFormat"></a>collectionFormat | `string` |Determina o formato da matriz se for utilizada uma matriz de tipos. Os valores possíveis são: <ul><li>`csv` - valores separados por vírgulas `foo,bar`. <li>`ssv` - valores separados por espaço `foo bar`. <li>`tsv` - valores separados por tabulação `foo\tbar`. <li>`pipes` - valores separados por tubo <code>foo&#124;bar</code>. <li>`multi` - corresponde a múltiplas instâncias de parâmetros em vez de múltiplos valores para uma única instância `foo=bar&foo=baz`. This is valid only for parameters [`in`](#parameterIn) "query" or "formData". </ul> Default value is `csv`.
-<a name="parameterExample"></a>example | * | Declara o exemplo para o valor do parâmetro
+<a name="parameterExample"></a>example | \* | Declara o exemplo para o valor do parâmetro
 <a name="parameterExtensions"></a>extensions | `string` | Acrescentar extensão aos parâmetros.
 
 ### Futuro
 
-Nome do campo | Tipo | Description
----|:---:|---
-<a name="parameterPattern"></a>pattern | `string` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.2.3.
-<a name="parameterMaxItems"></a>maxItems | `integer` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.2.
-<a name="parameterMinItems"></a>minItems | `integer` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.3.
-<a name="parameterUniqueItems"></a>uniqueItems | `boolean` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.4.
+| Nome do campo                                  |   Tipo    | Description                                                                        |
+| ---------------------------------------------- | :-------: | ---------------------------------------------------------------------------------- |
+| <a name="parameterPattern"></a>pattern         | `string`  | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.2.3. |
+| <a name="parameterMaxItems"></a>maxItems       | `integer` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.2. |
+| <a name="parameterMinItems"></a>minItems       | `integer` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.3. |
+| <a name="parameterUniqueItems"></a>uniqueItems | `boolean` | See https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.4. |
 
 ## Exemplos
-
 
 ### Descrições em múltiplas linhas
 
@@ -564,7 +569,6 @@ type Account struct {
 }
 ```
 
-
 ### Declaração de estruturação de funções
 
 Pode declarar as estruturas de resposta do seu pedido dentro de um corpo funcional.
@@ -588,8 +592,8 @@ func MyHandler() {
 }
 ```
 
-
 ### Composição do modelo em resposta
+
 ```go
 // JSONResult's data field will be overridden by the specific type proto.Order
 @success 200 {object} jsonresult.JSONResult{data=proto.Order} "desc"
@@ -609,6 +613,7 @@ type Order struct { //in `proto` package
 ```
 
 - também suportam uma variedade de objectos e tipos primitivos como resposta aninhada
+
 ```go
 @success 200 {object} jsonresult.JSONResult{data=[]proto.Order} "desc"
 @success 200 {object} jsonresult.JSONResult{data=string} "desc"
@@ -616,10 +621,13 @@ type Order struct { //in `proto` package
 ```
 
 - campos múltiplos que se sobrepõem. campo será adicionado se não existir
+
 ```go
 @success 200 {object} jsonresult.JSONResult{data1=string,data2=[]string,data3=proto.Order,data4=[]proto.Order} "desc"
 ```
+
 - overriding deep-level fields
+
 ```go
 type DeepObject struct { //in `proto` package
 	...
@@ -637,7 +645,6 @@ type DeepObject struct { //in `proto` package
 // @Header       200,400,default  {string}  Token     "token"
 // @Header       all              {string}  Token2    "token2"
 ```
-
 
 ### Utilizar parâmetros de caminhos múltiplos
 
@@ -692,6 +699,7 @@ type Account struct {
 [#708](https://github.com/swaggo/swag/issues/708) O analisador trata apenas de comentários estruturais a partir de `@Description` attribute.
 
 Assim, gerou o doc. de swagger como se segue:
+
 ```json
 "Account": {
   "type":"object",
@@ -710,6 +718,7 @@ Assim, gerou o doc. de swagger como se segue:
 ```
 
 ### Usar etiqueta do tipo swaggertype para suportar o tipo personalizado
+
 [#201](https://github.com/swaggo/swag/issues/201#issuecomment-475479409)
 
 ```go
@@ -747,13 +756,16 @@ type Account struct {
 ```
 
 [#379](https://github.com/swaggo/swag/issues/379)
+
 ```go
 type CerticateKeyPair struct {
 	Crt []byte `json:"crt" swaggertype:"string" format:"base64" example:"U3dhZ2dlciByb2Nrcw=="`
 	Key []byte `json:"key" swaggertype:"string" format:"base64" example:"U3dhZ2dlciByb2Nrcw=="`
 }
 ```
+
 generated swagger doc as follows:
+
 ```go
 "api.MyBinding": {
   "type":"object",
@@ -780,6 +792,7 @@ Se estiver a utilizar ficheiros gerados, as etiquetas [`swaggertype`](#use-swagg
 Ao passar um mapeamento para swag com `--overridesFile` pode dizer swag para utilizar um tipo no lugar de outro onde quer que apareça. Por defeito, se um ficheiro `.swaggo` estiver presente no directório actual, será utilizado.
 
 Go code:
+
 ```go
 type MyStruct struct {
   ID     sql.NullInt64 `json:"id"`
@@ -788,6 +801,7 @@ type MyStruct struct {
 ```
 
 `.swaggo`:
+
 ```
 // Substituir todos os NullInt64 por int
 replace database/sql.NullInt64 int
@@ -802,7 +816,8 @@ As directivas possíveis são comentários (começando por `//`), `replace path/
 (Note que os caminhos completos para qualquer tipo nomeado devem ser fornecidos para evitar problemas quando vários pacotes definem um tipo com o mesmo nome)
 
 Entregue em:
-```go
+
+````go
 "types.MyStruct": {
   "id": "integer"
 }
@@ -815,8 +830,7 @@ type Account struct {
     Name string     `json:"name"`
     Ignored int     `swaggerignore:"true"`
 }
-```
-
+````
 
 ### Adicionar informações de extensão ao campo de estruturação
 
@@ -841,7 +855,6 @@ gerar doc. de swagger como se segue:
     }
 }
 ```
-
 
 ### Renomear modelo a expor
 
@@ -884,8 +897,6 @@ Faça-o OR condição
 // @Security OAuth2Application[write, admin] || APIKeyAuth
 ```
 
-
-
 ### Adicionar uma descrição para enumerar artigos
 
 ```go
@@ -900,6 +911,7 @@ type Example struct {
 ### Gerar apenas tipos de ficheiros de documentos específicos
 
 Por defeito, o comando `swag` gera especificação Swagger em três tipos diferentes de ficheiros/arquivos:
+
 - docs.go
 - swagger.json
 - swagger.yaml
@@ -916,9 +928,11 @@ func GetPosts(w http.ResponseWriter, r *http.Request) {
 	_ = web.GenericNestedResponse[types.Post]{}
 }
 ```
+
 Para mais detalhes e outros exemplos, veja [esse arquivo](https://github.com/swaggo/swag/blob/master/testdata/generics_nested/api/api.go)
 
 ### Alterar os delimitadores de acção padrão Go Template
+
 [#980](https://github.com/swaggo/swag/issues/980)
 [#1177](https://github.com/swaggo/swag/issues/1177)
 
@@ -927,6 +941,7 @@ Se as suas anotações ou campos estruturantes contêm "{{" or "}}", a geração
 Para que a geração funcione correctamente, pode alterar os delimitadores por defeito com `-td'. Por exemplo:
 ``console
 swag init -g http/api.go -td "[[,]"
+
 ```
 
 O novo delimitador é um fio com o formato "`<left delimiter>`,`<right delimiter>`".
@@ -966,3 +981,4 @@ Apoiar este projecto tornando-se um patrocinador. O seu logótipo aparecerá aqu
 
 ## Licença
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fswaggo%2Fswag.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fswaggo%2Fswag?ref=badge_large)
+```

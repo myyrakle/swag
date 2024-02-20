@@ -1,5 +1,7 @@
 package tester
 
+import "github.com/myyrakle/swag/pkg/array"
+
 type ShopResponse struct {
 	ShopID   string `json:"shopID" validate:"required" example:"63ec5ccff19921e0414902b7"` // 샵 ID
 	ShopName string `json:"shopName" validate:"required" example:"스토어 쟈넬"`
@@ -7,8 +9,11 @@ type ShopResponse struct {
 
 type ShopsResponse []ShopResponse
 
+type ShopsResponseV2 array.Array[ShopResponse]
+
 type ListShopsResponse struct {
-	Shops ShopsResponse `json:"shops"`
+	Shops   ShopsResponse   `json:"shops"`
+	ShopsV2 ShopsResponseV2 `json:"shopsV2"`
 }
 
 // ListShops
@@ -20,6 +25,10 @@ type ListShopsResponse struct {
 // @Security BearerAuth
 // @Router /shops [get]
 func ListShops() {
+	foo := array.Array[ShopResponse]{}
+	if foo.IsNotEmpty() {
+		// do something
+	}
 }
 
 func main() {

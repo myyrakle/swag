@@ -1,0 +1,44 @@
+definitions:
+  tester.ListShopsResponse:
+    properties:
+      shops:
+        items:
+          $ref: '#/definitions/tester.ShopResponse'
+        type: array
+      shopsV2:
+        $ref: '#/definitions/tester.ShopsResponseV2'
+    type: object
+  tester.ShopResponse:
+    properties:
+      shopID:
+        description: 샵 ID
+        example: 63ec5ccff19921e0414902b7
+        type: string
+      shopName:
+        example: 스토어 쟈넬
+        type: string
+    required:
+    - shopID
+    - shopName
+    type: object
+  tester.ShopsResponseV2:
+    type: object
+info:
+  contact: {}
+paths:
+  /shops:
+    get:
+      description: 샵 목록을 조회하는 API 입니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 샵 목록 응답 값
+          schema:
+            $ref: '#/definitions/tester.ListShopsResponse'
+      security:
+      - BearerAuth: []
+      summary: 샵 목록 조회 ✅
+      tags:
+      - Shops
+swagger: "2.0"

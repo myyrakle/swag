@@ -6,7 +6,9 @@ definitions:
           $ref: '#/definitions/tester.ShopResponse'
         type: array
       shopsV2:
-        $ref: '#/definitions/tester.ShopsResponseV2'
+        items:
+          $ref: '#/definitions/tester.ShopResponse'
+        type: array
     type: object
   tester.ShopResponse:
     properties:
@@ -20,8 +22,6 @@ definitions:
     required:
     - shopID
     - shopName
-    type: object
-  tester.ShopsResponseV2:
     type: object
 info:
   contact: {}

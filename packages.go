@@ -1,12 +1,15 @@
 package swag
 
 import (
+	"bytes"
 	"fmt"
 	"go/ast"
 	goparser "go/parser"
 	"go/token"
+	"io"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"sort"
 	"strings"
@@ -32,11 +35,50 @@ func NewPackagesDefinitions() *PackagesDefinitions {
 	}
 }
 
+// copy file
+func Copy(src, dst string) error {
+	in, err := os.ReadFile(src)
+	if err != nil {
+		return fmt.Errorf("failed to open source file %s, error:%+v", src, err)
+	}
+
+	// array.Array[T] -> T[]
+	// T is any text
+	code := string(in)
+	re := regexp.MustCompile(`array\.Array\[(.*?)\]`)
+	replacedCode := re.ReplaceAllString(code, `[]$1`)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return fmt.Errorf("failed to create destination file %s, error:%+v", dst, err)
+	}
+	defer out.Close()
+
+	reader := bytes.NewReader([]byte(replacedCode))
+
+	_, err = io.Copy(out, reader)
+	if err != nil {
+		return fmt.Errorf("failed to copy file, error:%+v", err)
+	}
+	return out.Close()
+}
+
 // ParseFile parse a source file.
 func (pkgDefs *PackagesDefinitions) ParseFile(packageDir, path string, src interface{}, flag ParseFlag) error {
 	// positions are relative to FileSet
 	fileSet := token.NewFileSet()
-	astFile, err := goparser.ParseFile(fileSet, path, src, goparser.ParseComments)
+	//goparser.ParseExpr()
+
+	tempFilePath := filepath.Join(os.TempDir(), "swagtemp.go")
+
+	// path to temp file
+	Copy(path, tempFilePath)
+
+	defer func() {
+		_ = os.Remove(tempFilePath)
+	}()
+
+	astFile, err := goparser.ParseFile(fileSet, tempFilePath, src, goparser.ParseComments)
 	if err != nil {
 		return fmt.Errorf("failed to parse file %s, error:%+v", path, err)
 	}

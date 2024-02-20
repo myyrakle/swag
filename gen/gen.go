@@ -185,7 +185,6 @@ func (g *Gen) Build(config *Config) error {
 			g.debug.Printf("Using overrides from %s", config.OverridesFile)
 
 			overrides, err = parseOverrides(overridesFile)
-			fmt.Printf("!!! %+v\n", overrides)
 			if err != nil {
 				return err
 			}

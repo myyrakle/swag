@@ -52,7 +52,10 @@ const docTemplate = `{
                     }
                 },
                 "shopsV2": {
-                    "$ref": "#/definitions/tester.ShopsResponseV2"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tester.ShopResponse"
+                    }
                 }
             }
         },
@@ -73,9 +76,6 @@ const docTemplate = `{
                     "example": "스토어 쟈넬"
                 }
             }
-        },
-        "tester.ShopsResponseV2": {
-            "type": "object"
         }
     }
 }`

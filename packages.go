@@ -42,11 +42,17 @@ func Copy(src, dst string) error {
 		return fmt.Errorf("failed to open source file %s, error:%+v", src, err)
 	}
 
+	code := string(in)
+
+	// struct { array.Array[T] } -> T[]
+	// T is any text
+	re := regexp.MustCompile(`struct\s*{\s*array\.Array\[(.*?)\]\s*}`)
+	code = re.ReplaceAllString(code, `[]$1`)
+
 	// array.Array[T] -> T[]
 	// T is any text
-	code := string(in)
-	re := regexp.MustCompile(`array\.Array\[(.*?)\]`)
-	replacedCode := re.ReplaceAllString(code, `[]$1`)
+	re = regexp.MustCompile(`array\.Array\[(.*?)\]`)
+	code = re.ReplaceAllString(code, `[]$1`)
 
 	out, err := os.Create(dst)
 	if err != nil {
@@ -54,7 +60,7 @@ func Copy(src, dst string) error {
 	}
 	defer out.Close()
 
-	reader := bytes.NewReader([]byte(replacedCode))
+	reader := bytes.NewReader([]byte(code))
 
 	_, err = io.Copy(out, reader)
 	if err != nil {

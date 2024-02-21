@@ -1,11 +1,15 @@
 definitions:
   tester.ListShopsResponse:
     properties:
-      shops:
+      shopsV1:
         items:
           $ref: '#/definitions/tester.ShopResponse'
         type: array
       shopsV2:
+        items:
+          $ref: '#/definitions/tester.ShopResponse'
+        type: array
+      shopsV3:
         items:
           $ref: '#/definitions/tester.ShopResponse'
         type: array

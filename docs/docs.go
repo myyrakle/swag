@@ -45,13 +45,19 @@ const docTemplate = `{
         "tester.ListShopsResponse": {
             "type": "object",
             "properties": {
-                "shops": {
+                "shopsV1": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/tester.ShopResponse"
                     }
                 },
                 "shopsV2": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/tester.ShopResponse"
+                    }
+                },
+                "shopsV3": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/tester.ShopResponse"

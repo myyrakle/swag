@@ -7,13 +7,18 @@ type ShopResponse struct {
 	ShopName string `json:"shopName" validate:"required" example:"스토어 쟈넬"`
 }
 
-type ShopsResponse []ShopResponse
+type ShopsResponseV1 []ShopResponse
 
 type ShopsResponseV2 array.Array[ShopResponse]
 
+type ShopsResponseV3 struct {
+	array.Array[ShopResponse]
+}
+
 type ListShopsResponse struct {
-	Shops   ShopsResponse   `json:"shops"`
+	Shops   ShopsResponseV1 `json:"shopsV1"`
 	ShopsV2 ShopsResponseV2 `json:"shopsV2"`
+	ShopsV3 ShopsResponseV3 `json:"shopsV3"`
 }
 
 // ListShops
